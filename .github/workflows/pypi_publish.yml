@@ -61,4 +61,5 @@ jobs:
           python -m build
           
       - name: Publish
+        working-directory: src/python
         uses: pypa/gh-action-pypi-publish@release/v1
