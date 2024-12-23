@@ -1,0 +1,46 @@
+{
+    "nodes": [
+        {
+            "op_instance_id": "linreg",
+            "extra_dynattrs": {},
+            "inputs": [
+                "x"
+            ],
+            "outputs": [
+                "y1"
+            ]
+        },
+        {
+            "op_instance_id": "linreg2",
+            "extra_dynattrs": {},
+            "inputs": [
+                "x"
+            ],
+            "outputs": [
+                "y2"
+            ]
+        },
+        {
+            "op_instance_id": "linreg3",
+            "extra_dynattrs": {},
+            "inputs": [
+                "x"
+            ],
+            "outputs": [
+                "y3"
+            ]
+        },
+        {
+            "op_instance_id": "concat_reduce",
+            "extra_dynattrs": {},
+            "inputs": [
+                "y1",
+                "y2",
+                "y3"
+            ],
+            "outputs": [
+                "y4"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,152 @@
+[
+    {
+        "id": "linreg",
+        "op": "ONNX_v1",
+        "inputs": [
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    1
+                ]
+            }
+        ],
+        "attributes": {
+            "opsets": [
+                {
+                    "domain": "ai.onnx",
+                    "version": 12
+                }
+            ],
+            "requires_ort_extensions": false,
+            "has_external_data": false,
+            "onnx_ir_version": 7
+        },
+        "dynamic_attributes": {}
+    },
+    {
+        "id": "linreg2",
+        "op": "ONNX_v1",
+        "inputs": [
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    1
+                ]
+            }
+        ],
+        "attributes": {
+            "opsets": [
+                {
+                    "domain": "ai.onnx",
+                    "version": 12
+                }
+            ],
+            "requires_ort_extensions": false,
+            "has_external_data": false,
+            "onnx_ir_version": 7
+        },
+        "dynamic_attributes": {}
+    },
+    {
+        "id": "linreg3",
+        "op": "ONNX_v1",
+        "inputs": [
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    1
+                ]
+            }
+        ],
+        "attributes": {
+            "opsets": [
+                {
+                    "domain": "ai.onnx",
+                    "version": 12
+                }
+            ],
+            "requires_ort_extensions": false,
+            "has_external_data": false,
+            "onnx_ir_version": 7
+        },
+        "dynamic_attributes": {}
+    },
+    {
+        "id": "concat_reduce",
+        "op": "ONNX_v1",
+        "inputs": [
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    1
+                ]
+            },
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    1
+                ]
+            },
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "dtype": "Array[float32]",
+                "shape": [
+                    "batch",
+                    1
+                ]
+            }
+        ],
+        "attributes": {
+            "opsets": [
+                {
+                    "domain": "ai.onnx",
+                    "version": 12
+                }
+            ],
+            "requires_ort_extensions": false,
+            "has_external_data": false,
+            "onnx_ir_version": 7
+        },
+        "dynamic_attributes": {}
+    }
+]

@@ -1,0 +1,16 @@
+{
+    "nodes": [
+        {
+            "op_instance_id": "TestOp",
+            "extra_dynattrs": {
+                "testdynattr": "pipeline"
+            },
+            "inputs": [
+                "x"
+            ],
+            "outputs": [
+                "y1"
+            ]
+        }
+    ]
+}

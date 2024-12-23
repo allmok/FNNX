@@ -1,0 +1,14 @@
+{
+    "nodes": [
+        {
+            "op_instance_id": "TestOp",
+            "extra_dynattrs": {},
+            "inputs": [
+                "x"
+            ],
+            "outputs": [
+                "y1"
+            ]
+        }
+    ]
+}

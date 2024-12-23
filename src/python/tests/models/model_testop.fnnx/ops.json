@@ -1,0 +1,24 @@
+[
+    {
+        "id": "TestOp",
+        "op": "TestOp",
+        "inputs": [
+            {
+                "dtype": "NDContainer[ext::hello]",
+                "shape": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "dtype": "NDContainer[ext::hello]",
+                "shape": [
+                    1
+                ]
+            }
+        ],
+        "attributes": {},
+        "dynamic_attributes": {}
+    }
+]

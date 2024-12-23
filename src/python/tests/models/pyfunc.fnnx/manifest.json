@@ -1,0 +1,28 @@
+{
+    "variant": "pyfunc",
+    "description": "some text",
+    "producer_name": "producer",
+    "producer_version": "1.0.0",
+    "producer_tags": [
+        "tag1",
+        "tag2"
+    ],
+    "inputs": [
+        {
+            "name": "x",
+            "content_type": "NDJSON",
+            "dtype": "Array[float32]",
+            "shape": []
+        }
+    ],
+    "outputs": [
+        {
+            "name": "y",
+            "content_type": "NDJSON",
+            "dtype": "Array[float32]",
+            "shape": []
+        }
+    ],
+    "dynamic_attributes": [],
+    "env_vars": []
+}

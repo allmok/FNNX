@@ -1,0 +1,10 @@
+{
+    "pyfunc_classname": "TestFunc",
+    "extra_values": {
+        "val3": [
+            1,
+            2,
+            3
+        ]
+    }
+}
