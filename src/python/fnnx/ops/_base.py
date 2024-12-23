@@ -1,5 +1,5 @@
+from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import Self
 from dataclasses import dataclass
 from typing import Any
 from fnnx.device import DeviceConfig
@@ -35,7 +35,7 @@ class BaseOp(ABC):
         self.executor = executor
 
     @abstractmethod
-    def warmup(self, *args, **kwargs) -> Self:
+    def warmup(self, *args, **kwargs) -> BaseOp:
         pass
 
     @abstractmethod

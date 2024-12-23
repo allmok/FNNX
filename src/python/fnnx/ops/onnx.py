@@ -1,5 +1,5 @@
+from __future__ import annotations
 from fnnx.ops._base import BaseOp, OpOutput
-from typing import Self
 from os.path import join as pjoin
 
 try:
@@ -25,7 +25,7 @@ class OnnxOp_V1(BaseOp):
 
     def warmup(
         self,
-    ) -> Self:
+    ) -> OnnxOp_V1:
         self.model_path = pjoin(self.artifact_path, "model.onnx")
         if not ort:
             raise ImportError("onnxruntime is not installed")

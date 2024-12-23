@@ -23,7 +23,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install -e 'src/python[core]'
+          pip install -e 'src/python[core,test]'
           
       - name: Run tests
         working-directory: src/python
