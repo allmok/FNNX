@@ -59,7 +59,9 @@ jobs:
         working-directory: src/python
         run: |
           python -m build
-          
+      - name: Move dist files
+        run: |
+          mkdir -p dist/
+          mv src/python/dist/* dist/
       - name: Publish
-        working-directory: src/python
         uses: pypa/gh-action-pypi-publish@release/v1
