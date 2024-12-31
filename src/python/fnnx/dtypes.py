@@ -1,5 +1,4 @@
-from copy import deepcopy
-import jsonschema
+from fnnx.validators.jsonschema import validate_jsonschema
 from copy import copy, deepcopy
 
 
@@ -23,7 +22,6 @@ class FlatList:
 
 
 class DtypesManager:
-
     def __init__(self, external_dtypes: dict, builtins: dict):
         self.dtypes = deepcopy(external_dtypes)
         self.dtypes.update(deepcopy(builtins))
@@ -48,7 +46,7 @@ class DtypesManager:
 
     def _validate_dtype(self, dtype_name: str, data: dict):
         schema = self.get_dtype(dtype_name)
-        jsonschema.validate(data, schema)
+        validate_jsonschema(data, schema)
 
     def validate_dtype(self, dtype_name: str, data):
         if isinstance(data, list):
@@ -79,7 +77,6 @@ class DtypesManager:
 
 class NDContainer:
     def __init__(self, data, dtype, dtypes_manager: DtypesManager):
-
         if dtype.startswith("Array["):
             raise ValueError("NDContainer does not support Array dtype")
         elif dtype.startswith("NDContainer["):

@@ -63,7 +63,6 @@ class Context:
 
 
 class PyFunc(ABC):
-
     def __init__(self, context: Context):
         self.fnnx_context = context
 
@@ -103,10 +102,11 @@ class PyFuncVariant(BaseVariant):
 
     def get_pyfunc(self) -> Type[PyFunc]:
         unique_module_name = f"temp_module_{uuid.uuid4().hex}"
+        extra_modules_path = pjoin(
+            self.model_path, "variant_artifacts", "extra_modules"
+        )
         with _pyfunc_lock:
-            sys.path.insert(
-                0, pjoin(self.model_path, "variant_artifacts", "extra_modules")
-            )
+            sys.path.insert(0, extra_modules_path)
             new_modules = set()
             try:
                 spec = importlib.util.spec_from_file_location(
@@ -120,8 +120,12 @@ class PyFuncVariant(BaseVariant):
                 new_modules.update(set(sys.modules.keys()) - original_modules)
                 cls = getattr(module, self.pyfunc_classname)
             finally:
-                for module in new_modules:
-                    sys.modules.pop(module, None)
+                for module_name in new_modules:
+                    module = sys.modules.get(module_name)
+                    if module and (getattr(module, "__file__", "") or "").startswith(
+                        extra_modules_path
+                    ):
+                        sys.modules.pop(module_name, None)
                 sys.path.pop(0)
         if not issubclass(cls, PyFunc):
             raise ValueError(f"Class {cls} is not a subclass of PyFunc")

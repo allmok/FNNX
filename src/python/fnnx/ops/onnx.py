@@ -3,7 +3,7 @@ from fnnx.ops._base import BaseOp, OpOutput
 from os.path import join as pjoin
 
 try:
-    import onnxruntime as ort
+    import onnxruntime as ort  # type: ignore
 except ImportError:
     ort = None
 
@@ -13,16 +13,12 @@ except ImportError:
     _get_extensions_library_path = None
 
 from fnnx.utils import to_thread
-from fnnx.device import DeviceConfig
-from fnnx.dtypes import DtypesManager
-from concurrent.futures._base import Executor
 
 CPU_EXECUTION_PROVIDER = "CPUExecutionProvider"
 CUDA_EXECUTION_PROVIDER = "CUDAExecutionProvider"
 
 
 class OnnxOp_V1(BaseOp):
-
     def warmup(
         self,
     ) -> OnnxOp_V1:
