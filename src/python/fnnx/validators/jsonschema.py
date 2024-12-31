@@ -53,7 +53,7 @@ def _validate(instance, schema, definitions):
         except ValueError:
             pass  # Valid because instance does not match 'not' schema
         else:
-            raise ValueError(f'Instance should not match schema in "not"')
+            raise ValueError('Instance should not match schema in "not"')
     if "anyOf" in schema:
         for subschema in schema["anyOf"]:
             try:
@@ -254,11 +254,11 @@ def _validate_string(instance, schema):
         if format == "email":
             # Simple email regex
             if not re.match(r"^[^@]+@[^@]+\.[^@]+$", instance):
-                raise ValueError(f"String is not a valid email address")
+                raise ValueError("String is not a valid email address")
         elif format == "uri":
             # Simple URI regex
             if not re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", instance):
-                raise ValueError(f"String is not a valid URI")
+                raise ValueError("String is not a valid URI")
 
 
 def _validate_number(instance, schema):

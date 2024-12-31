@@ -6,7 +6,7 @@ from fnnx.node_instance import OpInstance
 from os.path import join as pjoin
 from abc import ABC, abstractmethod
 from concurrent.futures._base import Executor
-
+from os.path import abspath
 
 class BaseVariant(ABC):
     def __init__(
@@ -20,7 +20,7 @@ class BaseVariant(ABC):
         executor: Executor,
         op_executor: Executor,
     ):
-        self.model_path = model_path
+        self.model_path = abspath(model_path)
         self.registry = registry
         self.dtypes_manager = dtypes_manager
         self.op_instances: dict[str, OpInstance] = {}

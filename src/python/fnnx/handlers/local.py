@@ -1,5 +1,5 @@
 try:
-    import numpy as np
+    import numpy as np  # type: ignore
 except ImportError:
     np = None
 from os.path import join as pjoin
@@ -34,7 +34,6 @@ class LocalHandlerConfig(BaseHandlerConfig):
 
 
 class LocalHandler(BaseHandler):
-
     def __init__(
         self,
         model_path: str,
@@ -79,7 +78,7 @@ class LocalHandler(BaseHandler):
             external_dtypes = json.load(f)
             self.dtypes_manager = DtypesManager(external_dtypes, BUILTINS)
 
-        variant = self.manifest.get("variant")
+        self.variant = self.manifest.get("variant")
 
         registry = Registry()
         registry.register_default_ops()
@@ -87,12 +86,12 @@ class LocalHandler(BaseHandler):
             for op_name, op in handler_config.extra_ops.items():
                 registry.register_op(op, op_name)
 
-        if variant == "pipeline":
+        if self.variant == "pipeline":
             vcls = Pipeline
-        elif variant == "pyfunc":
+        elif self.variant == "pyfunc":
             vcls = PyFuncVariant
         else:
-            raise ValueError(f"Unknown variant: {variant}")
+            raise ValueError(f"Unknown variant: {self.variant}")
 
         self.executor = ThreadPoolExecutor(max_workers=handler_config.n_workers)
         self.op_executor = ThreadPoolExecutor(max_workers=handler_config.n_workers_node)
@@ -106,6 +105,14 @@ class LocalHandler(BaseHandler):
             executor=self.executor,
             op_executor=self.op_executor,
         ).warmup()
+
+    def _as_np(self, data, spec):
+        if np is None:
+            raise RuntimeError("You must have numpy installed to use Array dtype")
+        dtype = spec["dtype"][6:-1]
+        if dtype == "string":
+            return np.asarray(data).astype(np.str_)
+        return np.asarray(data).astype(dtype)
 
     def _prepare_inputs(self, inputs):
         prepared_inputs = {}
@@ -122,17 +129,16 @@ class LocalHandler(BaseHandler):
                     else:
                         prepared_inputs[name] = input
                 elif "Array[" in spec["dtype"]:
-                    if np is None:
-                        raise RuntimeError(
-                            "You must have numpy installed to use Array dtype"
-                        )
-                    dtype = spec["dtype"][6:-1]
-                    if dtype == "string":
-                        prepared_inputs[name] = np.asarray(input).astype(np.str_)
-                    else:
-                        prepared_inputs[name] = np.asarray(input).astype(dtype)
+                    prepared_inputs[name] = self._as_np(input, spec)
                 else:
                     raise ValueError(f"Unknown dtype {spec['dtype']}")
+            elif spec["content_type"] == "JSON" and self.variant != "pipeline":
+                if "Array[" in spec["dtype"]:
+                    prepared_inputs[name] = self._as_np(input, spec)
+                else:
+                    dtype = spec["dtype"]
+                    self.dtypes_manager.validate_dtype(dtype, input)
+                    prepared_inputs[name] = input
             else:
                 raise ValueError(f"Unknown input type {spec['content_type']}")
         return prepared_inputs

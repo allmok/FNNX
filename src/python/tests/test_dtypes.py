@@ -1,7 +1,5 @@
 import unittest
 from fnnx.dtypes import FlatList, DtypesManager, NDContainer, BUILTINS
-import jsonschema
-
 
 class TestFlatList(unittest.TestCase):
 
@@ -60,7 +58,7 @@ class TestDtypesManager(unittest.TestCase):
 
     def test_validate_dtype_invalid_data(self):
         data = {"name": "Alice", "age": "thirty"}
-        with self.assertRaises(jsonschema.ValidationError):
+        with self.assertRaises(ValueError):
             self.manager.validate_dtype("Person", data)
 
     def test_validate_dtype_list_of_data(self):
@@ -100,7 +98,7 @@ class TestNDContainer(unittest.TestCase):
 
     def test_initialization_with_invalid_data(self):
         data = [{"num": 1}, {"num": "two"}, {"num": 3}]
-        with self.assertRaises(jsonschema.ValidationError):
+        with self.assertRaises(ValueError):
             NDContainer(data, "Number", self.dtype_manager)
 
     def test_initialization_with_ndcontainer_dtype(self):
