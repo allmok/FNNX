@@ -33,7 +33,6 @@ async def dag_compute_async(
     as_val: Callable,
     components_passthrough: dict,
 ) -> dict:
-
     state: dict[str, AsyncDelayedResponse | Any] = shallow_copy(inputs)
     for component in components:
         tasks = []
@@ -54,10 +53,12 @@ async def dag_compute_async(
                 copy(components_passthrough["dynamic_attributes"])
                 | component.extra_dynattrs
             )
-        component_compute_output = compute_fn(
-            component,
-            component_inputs,
-            **components_passthrough,
+        component_compute_output = asyncio.create_task(
+            compute_fn(
+                component,
+                component_inputs,
+                **components_passthrough,
+            )
         )
 
         for i, output_key in enumerate(component.outputs):
