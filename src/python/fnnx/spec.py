@@ -8,6 +8,7 @@ schema = {
                     "name": {"title": "Name", "type": "string"},
                     "content_type": {
                         "const": "JSON",
+                        "enum": ["JSON"],
                         "title": "Content Type",
                         "type": "string",
                     },
@@ -30,6 +31,7 @@ schema = {
                     "name": {"title": "Name", "type": "string"},
                     "content_type": {
                         "const": "NDJSON",
+                        "enum": ["NDJSON"],
                         "title": "Content Type",
                         "type": "string",
                     },
@@ -137,6 +139,166 @@ schema = {
         "title": "Manifest",
         "type": "object",
     },
+    "ops_entries": {
+        "$defs": {
+            "OpDynamicAttribute": {
+                "properties": {
+                    "name": {"title": "Name", "type": "string"},
+                    "default_value": {"title": "Default Value", "type": "string"},
+                },
+                "required": ["name", "default_value"],
+                "title": "OpDynamicAttribute",
+                "type": "object",
+            },
+            "OpIO": {
+                "properties": {
+                    "dtype": {"title": "Dtype", "type": "string"},
+                    "shape": {
+                        "items": {"anyOf": [{"type": "integer"}, {"type": "string"}]},
+                        "title": "Shape",
+                        "type": "array",
+                    },
+                },
+                "required": ["dtype", "shape"],
+                "title": "OpIO",
+                "type": "object",
+            },
+            "OpInstance": {
+                "properties": {
+                    "id": {
+                        "pattern": "^[a-zA-Z0-9_]+$",
+                        "title": "Id",
+                        "type": "string",
+                    },
+                    "op": {"title": "Op", "type": "string"},
+                    "inputs": {
+                        "items": {"$ref": "#/$defs/OpIO"},
+                        "title": "Inputs",
+                        "type": "array",
+                    },
+                    "outputs": {
+                        "items": {"$ref": "#/$defs/OpIO"},
+                        "title": "Outputs",
+                        "type": "array",
+                    },
+                    "attributes": {"title": "Attributes", "type": "object"},
+                    "dynamic_attributes": {
+                        "additionalProperties": {"$ref": "#/$defs/OpDynamicAttribute"},
+                        "title": "Dynamic Attributes",
+                        "type": "object",
+                    },
+                },
+                "required": [
+                    "id",
+                    "op",
+                    "inputs",
+                    "outputs",
+                    "attributes",
+                    "dynamic_attributes",
+                ],
+                "title": "OpInstance",
+                "type": "object",
+            },
+        },
+        "properties": {
+            "ops": {
+                "items": {"$ref": "#/$defs/OpInstance"},
+                "title": "Ops",
+                "type": "array",
+            }
+        },
+        "required": ["ops"],
+        "title": "OpInstances",
+        "type": "object",
+    },
+    "meta_entry": {
+        "properties": {
+            "id": {"title": "Id", "type": "string"},
+            "producer": {"title": "Producer", "type": "string"},
+            "producer_version": {"title": "Producer Version", "type": "string"},
+            "producer_tags": {
+                "items": {"type": "string"},
+                "title": "Producer Tags",
+                "type": "array",
+            },
+            "payload": {"title": "Payload", "type": "object"},
+        },
+        "required": ["id", "producer", "producer_version", "producer_tags", "payload"],
+        "title": "MetaEntry",
+        "type": "object",
+    },
+    "envs": {
+        "python3::conda_pip": {
+            "$defs": {
+                "PipCondition": {
+                    "properties": {
+                        "platform": {
+                            "anyOf": [
+                                {"items": {"type": "string"}, "type": "array"},
+                                {"type": "null"},
+                            ],
+                            "default": None,
+                            "title": "Platform",
+                        },
+                        "os": {
+                            "anyOf": [
+                                {"items": {"type": "string"}, "type": "array"},
+                                {"type": "null"},
+                            ],
+                            "default": None,
+                            "title": "Os",
+                        },
+                        "acclerator": {
+                            "anyOf": [
+                                {"items": {"type": "string"}, "type": "array"},
+                                {"type": "null"},
+                            ],
+                            "default": None,
+                            "title": "Acclerator",
+                        },
+                    },
+                    "title": "PipCondition",
+                    "type": "object",
+                },
+                "PipDependency": {
+                    "properties": {
+                        "package": {"title": "Package", "type": "string"},
+                        "extra_pip_args": {
+                            "anyOf": [{"type": "string"}, {"type": "null"}],
+                            "default": None,
+                            "title": "Extra Pip Args",
+                        },
+                        "condition": {
+                            "anyOf": [
+                                {"$ref": "#/$defs/PipCondition"},
+                                {"type": "null"},
+                            ],
+                            "default": None,
+                        },
+                    },
+                    "required": ["package"],
+                    "title": "PipDependency",
+                    "type": "object",
+                },
+            },
+            "properties": {
+                "python_version": {"title": "Python Version", "type": "string"},
+                "build_dependencies": {
+                    "items": {"type": "string"},
+                    "title": "Build Dependencies",
+                    "type": "array",
+                },
+                "dependencies": {
+                    "items": {"$ref": "#/$defs/PipDependency"},
+                    "title": "Dependencies",
+                    "type": "array",
+                },
+            },
+            "required": ["python_version", "build_dependencies", "dependencies"],
+            "title": "Python3_CondaPip",
+            "type": "object",
+        }
+    },
     "ops": {
         "ONNX_v1": {
             "$defs": {
@@ -205,7 +367,12 @@ schema = {
             },
             "properties": {
                 "id": {"pattern": "^[a-zA-Z0-9_]+$", "title": "Id", "type": "string"},
-                "op": {"const": "ONNX_v1", "title": "Op", "type": "string"},
+                "op": {
+                    "const": "ONNX_v1",
+                    "enum": ["ONNX_v1"],
+                    "title": "Op",
+                    "type": "string",
+                },
                 "inputs": {
                     "items": {"$ref": "#/$defs/OpIO"},
                     "title": "Inputs",
@@ -232,42 +399,6 @@ schema = {
                 "dynamic_attributes",
             ],
             "title": "ONNX_v1",
-            "type": "object",
-        }
-    },
-    "meta_entry": {
-        "properties": {
-            "id": {"title": "Id", "type": "string"},
-            "producer": {"title": "Producer", "type": "string"},
-            "producer_version": {"title": "Producer Version", "type": "string"},
-            "producer_tags": {
-                "items": {"type": "string"},
-                "title": "Producer Tags",
-                "type": "array",
-            },
-            "payload": {"title": "Payload", "type": "object"},
-        },
-        "required": ["id", "producer", "producer_version", "producer_tags", "payload"],
-        "title": "MetaEntry",
-        "type": "object",
-    },
-    "envs": {
-        "python3::conda_pip": {
-            "properties": {
-                "python_version": {"title": "Python Version", "type": "string"},
-                "build_dependencies": {
-                    "items": {"type": "string"},
-                    "title": "Build Dependencies",
-                    "type": "array",
-                },
-                "dependencies": {
-                    "additionalProperties": {"type": "string"},
-                    "title": "Dependencies",
-                    "type": "object",
-                },
-            },
-            "required": ["python_version", "build_dependencies", "dependencies"],
-            "title": "Python3_CondaPip",
             "type": "object",
         }
     },

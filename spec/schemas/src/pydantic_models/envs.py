@@ -14,6 +14,7 @@ class PipDependency(BaseModel):
 
 
 class Python3_CondaPip(BaseModel):
+    # `python3::conda_pip`
     python_version: str
     build_dependencies: list[str]
-    dependencies: dict[str, str]
+    dependencies: list[PipDependency]

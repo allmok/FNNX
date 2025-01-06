@@ -17,7 +17,7 @@ meta_entry_json_schema = MetaEntry.model_json_schema()
 combined_json_schema = {
     "version": SPEC_VERSION,
     "manifest": manifest_json_schema,
-    "ops": ops_json_schema,
+    "ops_entries": ops_json_schema,
     "meta_entry": meta_entry_json_schema,
     "envs": {},
     "ops": {},
