@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Literal
-from pydantic_models.op_istances import OpInstance
+from pydantic_models.op_instances import OpInstance
 from pydantic_models.common import Empty
 
 

@@ -1,6 +1,6 @@
 # This file is auto generated and must not be modified manually!
 schema = {
-    "version": "0.0.1",
+    "version": "0.0.2",
     "manifest": {
         "$defs": {
             "JSON": {
@@ -8,7 +8,6 @@ schema = {
                     "name": {"title": "Name", "type": "string"},
                     "content_type": {
                         "const": "JSON",
-                        "enum": ["JSON"],
                         "title": "Content Type",
                         "type": "string",
                     },
@@ -31,7 +30,6 @@ schema = {
                     "name": {"title": "Name", "type": "string"},
                     "content_type": {
                         "const": "NDJSON",
-                        "enum": ["NDJSON"],
                         "title": "Content Type",
                         "type": "string",
                     },
@@ -248,13 +246,13 @@ schema = {
                             "default": None,
                             "title": "Os",
                         },
-                        "acclerator": {
+                        "accelerator": {
                             "anyOf": [
                                 {"items": {"type": "string"}, "type": "array"},
                                 {"type": "null"},
                             ],
                             "default": None,
-                            "title": "Acclerator",
+                            "title": "Accelerator",
                         },
                     },
                     "title": "PipCondition",
@@ -367,12 +365,7 @@ schema = {
             },
             "properties": {
                 "id": {"pattern": "^[a-zA-Z0-9_]+$", "title": "Id", "type": "string"},
-                "op": {
-                    "const": "ONNX_v1",
-                    "enum": ["ONNX_v1"],
-                    "title": "Op",
-                    "type": "string",
-                },
+                "op": {"const": "ONNX_v1", "title": "Op", "type": "string"},
                 "inputs": {
                     "items": {"$ref": "#/$defs/OpIO"},
                     "title": "Inputs",

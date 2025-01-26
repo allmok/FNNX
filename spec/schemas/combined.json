@@ -1,5 +1,5 @@
 {
-    "version": "0.0.1",
+    "version": "0.0.2",
     "manifest": {
         "$defs": {
             "JSON": {
@@ -10,9 +10,6 @@
                     },
                     "content_type": {
                         "const": "JSON",
-                        "enum": [
-                            "JSON"
-                        ],
                         "title": "Content Type",
                         "type": "string"
                     },
@@ -52,9 +49,6 @@
                     },
                     "content_type": {
                         "const": "NDJSON",
-                        "enum": [
-                            "NDJSON"
-                        ],
                         "title": "Content Type",
                         "type": "string"
                     },
@@ -432,7 +426,7 @@
                             "default": null,
                             "title": "Os"
                         },
-                        "acclerator": {
+                        "accelerator": {
                             "anyOf": [
                                 {
                                     "items": {
@@ -445,7 +439,7 @@
                                 }
                             ],
                             "default": null,
-                            "title": "Acclerator"
+                            "title": "Accelerator"
                         }
                     },
                     "title": "PipCondition",
@@ -624,9 +618,6 @@
                 },
                 "op": {
                     "const": "ONNX_v1",
-                    "enum": [
-                        "ONNX_v1"
-                    ],
                     "title": "Op",
                     "type": "string"
                 },
