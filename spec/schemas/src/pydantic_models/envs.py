@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class PipCondition(BaseModel):
     platform: list[str] | None = None
     os: list[str] | None = None
-    acclerator: list[str] | None = None
+    accelerator: list[str] | None = None
 
 
 class PipDependency(BaseModel):
