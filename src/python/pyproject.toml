@@ -1,6 +1,6 @@
 [project]
 name = "fnnx"
-version = "0.0.5"
+version = "0.0.6b1"
 description = "A flexible ML packaging standard."
 authors = [
     { name = "Oleh Kostromin", email = "oleh@beastbyte.ai" }
@@ -15,5 +15,5 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-core = ["numpy>=1.0.0,<3.0.0", "onnxruntime>=1.0.0,<2.0.0"]
+core = ["numpy>=1.0.0,<3.0.0", "onnxruntime>=1.0.0,<2.0.0", "httpx<1.0.0"]
 test = ["jsonschema>=4.0.0,<5.0.0"]
