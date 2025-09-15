@@ -1,5 +1,5 @@
 {
-    "version": "0.0.2",
+    "version": "0.0.3",
     "manifest": {
         "$defs": {
             "JSON": {
@@ -500,6 +500,21 @@
                     },
                     "title": "Dependencies",
                     "type": "array"
+                },
+                "conda_channels": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Conda Channels"
                 }
             },
             "required": [
