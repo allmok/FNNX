@@ -10,6 +10,7 @@ from fnnx.envs._common import which
 import shutil
 import platform
 import subprocess
+import tempfile
 
 
 class CondaLikeEnvManager:
@@ -134,34 +135,54 @@ class CondaLikeEnvManager:
         ):
             run_cmd(cmd)
 
-        all_pkgs: list[str] = []
+        req_lines: list[str] = []
+        has_hash = False
         for dep in deps:
-            pkg = dep["package"]
-            extra = dep.get("extra_pip_args")
-            if extra:
-                all_pkgs.append(" ".join([pkg, extra]))
-            else:
-                all_pkgs.append(pkg)
+            pkg = dep["package"]  # e.g. 'pkg ; sys_platform == win32'
+            extra = (
+                dep.get("extra_pip_args") or ""
+            )  # e.g. '--extra-index-url https://... --hash=sha256:...'
+            line = f"{pkg} {extra}".strip()
+            req_lines.append(line)
+            if "--hash=" in line:
+                has_hash = True
 
-        pip_cmd = [
-            self._exe,
-            "run",
-            "-n",
-            env_name,
-            "python",
-            "-m",
-            "pip",
-            "install",
-            "--disable-pip-version-check",
-            "--no-input",
-            *shlex.split(" ".join(all_pkgs)),
-        ]
+        req_file = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="w", encoding="utf-8", suffix=".txt", delete=False
+            ) as tf:
+                tf.write("\n".join(req_lines) + "\n")
+                req_file = tf.name
 
-        console.cmd(pip_cmd, label="pip")
-        with console.spinner(
-            f"Installing {len(all_pkgs)} pip package(s)", detail=shlex.join(pip_cmd)
-        ):
-            run_cmd(pip_cmd)
+            pip_cmd = [
+                self._exe,
+                "run",
+                "-n",
+                env_name,
+                "python",
+                "-m",
+                "pip",
+                "install",
+                "--disable-pip-version-check",
+                "--no-input",
+            ]
+            if has_hash:
+                pip_cmd.append("--require-hashes")
+            pip_cmd += ["-r", req_file]
+
+            console.cmd(pip_cmd, label="pip")
+            with console.spinner(
+                f"Installing {len(req_lines)} pip package(s)",
+                detail=shlex.join(pip_cmd),
+            ):
+                run_cmd(pip_cmd)
+        finally:
+            if req_file:
+                try:
+                    os.unlink(req_file)
+                except OSError:
+                    pass
 
     def python_cmd(self, argv: list[str]) -> list[str]:
         if self._env_path is None:
