@@ -18,3 +18,4 @@ class Python3_CondaPip(BaseModel):
     python_version: str
     build_dependencies: list[str]
     dependencies: list[PipDependency]
+    conda_channels: list[str] | None = None

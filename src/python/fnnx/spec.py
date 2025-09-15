@@ -1,6 +1,6 @@
 # This file is auto generated and must not be modified manually!
 schema = {
-    "version": "0.0.2",
+    "version": "0.0.3",
     "manifest": {
         "$defs": {
             "JSON": {
@@ -290,6 +290,14 @@ schema = {
                     "items": {"$ref": "#/$defs/PipDependency"},
                     "title": "Dependencies",
                     "type": "array",
+                },
+                "conda_channels": {
+                    "anyOf": [
+                        {"items": {"type": "string"}, "type": "array"},
+                        {"type": "null"},
+                    ],
+                    "default": None,
+                    "title": "Conda Channels",
                 },
             },
             "required": ["python_version", "build_dependencies", "dependencies"],

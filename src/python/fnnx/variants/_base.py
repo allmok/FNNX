@@ -8,6 +8,7 @@ from abc import ABC, abstractmethod
 from concurrent.futures._base import Executor
 from os.path import abspath
 
+
 class BaseVariant(ABC):
     def __init__(
         self,
@@ -39,7 +40,7 @@ class BaseVariant(ABC):
             operator = op(
                 artifact_path,
                 attributes=op_instance.get("attributes", {}),
-                dynamic_attribute_map=op_instance.get("dynamic_attributes", None),
+                dynamic_attribute_map=op_instance.get("dynamic_attributes", {}),
                 device_config=device,
                 input_specs=op_instance["inputs"],
                 output_specs=op_instance["outputs"],
