@@ -1,6 +1,6 @@
 import { interfaces, LocalHandler, DtypesManager, Inputs, Outputs, DynamicAttributes } from "@fnnx/common";
-import { TarExtractor } from "./tar";
-import { ONNXOpV1 } from "./ops";
+import { TarExtractor } from "./tar.js";
+import { ONNXOpV1 } from "./ops.js";
 
 const op_implementations = {
     "ONNX_v1": ONNXOpV1
