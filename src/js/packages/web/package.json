@@ -12,10 +12,15 @@
     },
     "dependencies": {
         "@fnnx/common": "workspace:*",
-        "onnxruntime-web": "^1.20.1",
-        "playwright": "^1.50.1"
+        "onnxruntime-web": "^1.20.1"
     },
     "files": [
         "dist"
-    ]
+    ],
+    "devDependencies": {
+        "@playwright/test": "^1.56.1",
+        "http-server": "^14.1.1",
+        "jsdom": "^27.0.1",
+        "vitest": "^1.6.0"
+    }
 }
