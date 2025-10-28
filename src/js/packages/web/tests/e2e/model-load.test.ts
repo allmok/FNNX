@@ -50,7 +50,7 @@ test.describe('Model Load Test', () => {
       if (type === 'error') {
         console.error('Browser error:', text);
       } else if (type === 'log' || type === 'info') {
-        console.log('📘', text);
+        console.log(text);
       }
     });
 
