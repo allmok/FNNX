@@ -168,7 +168,7 @@ test.describe('Model Load Test', () => {
 
   test('should load Model from dist', async ({ page }) => {
     const status = await page.locator('#status').textContent();
-    console.log('📜 Status element text:', status);
+    console.log('Status element text:', status);
 
     const hasModel = await page.evaluate(() => {
       console.log('window.Model:', window.Model);
